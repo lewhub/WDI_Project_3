@@ -36,6 +36,10 @@ li {
   </nav>
 </div>
 
+
+<input id="search-box" class="search-box-class" type="text" placeholder="Search for a place">
+<div id="map"></div>
+
 <!-- Modal -->
 <div id="modal1" class="modal">
   <div class="modal-content">
@@ -48,8 +52,6 @@ li {
     <a href="#!" id="close-button" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
   </div>
 </div>
-<input id="search-box" class="search-box-class" type="text" placeholder="Search for a place">
-<div id="map"></div>
 
 <!-- Modal for already dropped pin -->
 <div id="modal2" class="modal">
@@ -228,10 +230,13 @@ function showUser(){
           })
           searchMarkers.push(marker)
           google.maps.event.addListener(marker, 'click', function(){
-            infoWindow.setContent(place.name + '<br>' + place.formatted_address + '<br>' + place.id + '<br>' + '<button id="add-event">Add an event</button>')
+            infoWindow.setContent(place.name + '<br>' + place.formatted_address +
+             '<br>' + place.id +
+             '<br>' + '<button id="add-event">Add an event</button>')
             infoWindow.open(map, this)
+
             $('#add-event').on('click', function(){
-              console.log(place.place_id)
+              console.log('add event clicked')
               $.ajax({
                 method: 'post',
                 url: '/spots',
@@ -254,14 +259,14 @@ function showUser(){
                       infoWindow.open(map, this)
                       $('#add-event-hardcoded').on('click', function(){
                         console.log('clicked go today!!!')
-                        $('#modal1').openModal()
+                        $('#modal2').openModal()
                       })
                     })
                   }
                 })
               })
 
-              $('#modal1').openModal()
+              //  $('#modal1').openModal()
 
               $('#close-button').on('click', function(){
                 $.ajax({
@@ -426,32 +431,32 @@ function showUser(){
 
 
 
-    service.getDetails({
-      placeId: 'ChIJGQCRws6kwoARq_Uj_7UKF7Q'
-    }, function(place, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        })
-        google.maps.event.addListener(marker, 'click', function() {
-          // Here were manipulating the place object to diplay the place name provided by google. We are also adding a list to the message box
-          infoWindow.setContent('<div class="info-window-box"><strong>' + place.name + '</strong><br>' +
-            'Place ID: ' + place.name + '<br>' + place.formatted_address + '</div>' + '<ul><li id="field-hockey-details">Field Hockey Fun</li><li>Volleyball Game</li><li>Squats at Muscle Beach</li><li>Come play sand flag football by Jamie</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li></ul>');
-          infoWindow.open(map, this);
-          // Here we are adding css to the info window that google provides where we want to show events to change the height of the info box and make it scrollable. We want to show five events (lis) before scrolling
-          $('.gm-style-iw').css({'max-height': '250px'})
-          var my_li = $('#field-hockey-details');
-          var modal = $('#modal1')
-          my_li.on('click', function(){
-            console.log('my li clicked!!!', my_li)
-            modal.openModal()
-            // to close a modal
-            //   $('#modal1').closeModal()
-          })
-        });
-      }
-    });
+    // service.getDetails({
+    //   placeId: 'ChIJGQCRws6kwoARq_Uj_7UKF7Q'
+    // }, function(place, status) {
+    //   if (status === google.maps.places.PlacesServiceStatus.OK) {
+    //     var marker = new google.maps.Marker({
+    //       map: map,
+    //       position: place.geometry.location
+    //     })
+    //     google.maps.event.addListener(marker, 'click', function() {
+    //       // Here were manipulating the place object to diplay the place name provided by google. We are also adding a list to the message box
+    //       infoWindow.setContent('<div class="info-window-box"><strong>' + place.name + '</strong><br>' +
+    //         'Place ID: ' + place.name + '<br>' + place.formatted_address + '</div>' + '<ul><li id="field-hockey-details">Field Hockey Fun</li><li>Volleyball Game</li><li>Squats at Muscle Beach</li><li>Come play sand flag football by Jamie</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li><li>Workout Swimming</li></ul>');
+    //       infoWindow.open(map, this);
+    //       // Here we are adding css to the info window that google provides where we want to show events to change the height of the info box and make it scrollable. We want to show five events (lis) before scrolling
+    //       $('.gm-style-iw').css({'max-height': '250px'})
+    //       var my_li = $('#field-hockey-details');
+    //       var modal = $('#modal1')
+    //       my_li.on('click', function(){
+    //         console.log('my li clicked!!!', my_li)
+    //         modal.openModal()
+    //         // to close a modal
+    //         //   $('#modal1').closeModal()
+    //       })
+    //     });
+    //   }
+    // });
   }
 
 </script>
