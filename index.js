@@ -24,7 +24,7 @@ var PORT = process.env.PORT || 3000
 var LOCAL_DB_URL = 'mongodb://localhost/spot_buds'
 var DB_URL = process.env.MLAB_LINK || 'mongodb://localhost/spot_buds'
 // Connect to Mongo DB Via Remote Heroku
-mongoose.connect(DB_URL, function(err){
+mongoose.connect(LOCAL_DB_URL, function(err){
   if(err) return console.log('Cannot connect, weep...')
   console.log('Connected to MongoDb, WOOTWOOT!')
 })
